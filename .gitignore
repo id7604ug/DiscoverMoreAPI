@@ -88,3 +88,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+*.idea/ 
+__pyc 
+__pycache__ 
+pyc 

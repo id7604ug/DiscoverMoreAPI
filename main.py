@@ -1,13 +1,19 @@
 import user_interface
 import api_requests
 
+
 def handle_choice(user_choice):
+    user_tweets = api_requests.UserApiRequest()
     # function to handle the choice selected 
     if user_choice == '1':
-        api_requests.get_tweets()
+
+        user_tweets.get_tweets()
 
     elif user_choice == '2':
         print('do something')
+        # Working on this functionality
+        user_tweets.search_twitter_user()
+
 
     elif user_choice == '3':
         print('do something')
