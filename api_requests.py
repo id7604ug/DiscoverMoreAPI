@@ -5,10 +5,10 @@ import user_interface
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key = 'VA3gs5VBhNny9AFRO99ugvpni' # Please enter your consumer key here
-        self.consumer_secret='nqSf5P6rLtOJMpIeY3nbT8pYfjqZ6cqTWFTZQflkaOXPZvKpku' # Please enter your consumer secret here
-        self.access_token='836064650559111169-lIdHHFD2BRy6Qp1qtpfW5yBMmefc8KU'# Please enter your access token here
-        self.access_token_secret='4PReYu3Z0ubKrYbtZGJ2i9NfCT7wKpJce93IjvZLRQXCu' # Please enter your access token secret here
+        self.consumer_key = '' # Please enter your consumer key here
+        self.consumer_secret='' # Please enter your consumer secret here
+        self.access_token=''# Please enter your access token here
+        self.access_token_secret='' # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
