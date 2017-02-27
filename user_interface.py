@@ -17,12 +17,16 @@ def get_user_search():
     return user_input
 
 def get_user_tweet_count():
-  # while loop to make sure user is entering a number
+  # while loop to make user is entering a number
     while True:
         try:
-            # getting in put for how many tweets the user wants returned
+            # getting input for how many tweets the user wants returned
             user_input = int(input("Enter an amount of tweets you want to search (1-100): "))
-            break
+            if user_input > 100:
+                print('Please enter a number less than 100')
+                pass
+            else:
+                break
         except ValueError:
             print('please enter a int')
 

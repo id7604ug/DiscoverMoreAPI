@@ -1,19 +1,18 @@
 import user_interface
 import api_requests
+from datastore import call_get_tweets
 
 
 def handle_choice(user_choice):
     user_tweets = api_requests.UserApiRequest()
-    # function to handle the choice selected 
+    # function to handle the choice selected
     if user_choice == '1':
-
-        user_tweets.get_tweets()
+        # searching tweets
+        call_get_tweets()
 
     elif user_choice == '2':
-        print('do something')
         # Working on this functionality
         user_tweets.search_twitter_user()
-
 
     elif user_choice == '3':
         print('do something')
