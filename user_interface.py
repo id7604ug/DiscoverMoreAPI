@@ -2,9 +2,10 @@ def display_menu_get_choice():
     #Displaying the menu choice
     print('''
         1. Search Twitter
-        2. Make this do something
-        3. Make this do something
-        4. Make this do something
+        2. Update a status on Twitter
+        3. Search users on Twitter
+        4. Delete a status on Twitter
+        5. Update a status on Twitter
         q. Quit
     ''')
 

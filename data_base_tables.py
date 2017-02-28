@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 
+
 # Create engine.
 engine = create_engine('sqlite:///discover_more.db', echo=True)
 Base = declarative_base()

@@ -11,15 +11,15 @@ def handle_choice(user_choice):
         call_get_tweets()
 
     elif user_choice == '2':
-        # Working on this functionality
-        user_tweets.search_twitter_user()
+        user_tweets.status_update()
 
     elif user_choice == '3':
-        print('do something')
+        user_tweets.search_twitter_user()
 
     elif user_choice == '4':
-        print('do something')
-
+        user_tweets.delete_status()
+    elif user_choice == '5':
+        user_tweets.status_update()
     elif user_choice == 'q':
         quit()
 
