@@ -19,9 +19,13 @@ def handle_choice(user_choice):
     elif user_choice == '4':
         user_tweets.delete_status()
     elif user_choice == '5':
+
         user_tweets.status_update()
+    elif user_choice == '5':
+        print("Do something")
     elif user_choice == 'q':
         quit()
+
 
     else:
        print('Please enter a valid selection')

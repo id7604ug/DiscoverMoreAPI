@@ -6,10 +6,10 @@ import tweepy
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key ='PitU7ie9lt7LPwIx1HnSpcqHI' # Please enter your consumer key here
-        self.consumer_secret='71ih6cpkmAvh8b5UIcvROjw1dUnVRguteLgbygRkUepxlRIgkx' # Please enter your consumer secret here
-        self.access_token='1508067367-1FzmtXFSJc0p8WpP0deZszljlzyLkryBAMPwqvQ'# Please enter your access token here
-        self.access_token_secret='3nywRI2ZcKKvxSG3hCcRPACMMFULbdGJ9hT0s96YgSo1J' # Please enter your access token secret here
+        self.consumer_key ='' # Please enter your consumer key here
+        self.consumer_secret='' # Please enter your consumer secret here
+        self.access_token=''# Please enter your access token here
+        self.access_token_secret='' # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
