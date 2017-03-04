@@ -8,7 +8,6 @@ def display_menu_twitter():
         3. Search users on Twitter
         4. Delete a status on Twitter
         5. Update a status on Twitter
-        6. Search Reddit for a topic
         e. Exit to main menu
     ''')
 

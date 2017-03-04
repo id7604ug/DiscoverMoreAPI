@@ -5,7 +5,6 @@ from datastore import call_get_tweets
 
 def handle_choice_twitter(user_choice):
     user_tweets = api_requests.UserApiRequest()
-    user_reddit = api_requests.RedditAPIRequest()
     # function to handle the choice selected
     if user_choice == '1':
         # searching tweets
