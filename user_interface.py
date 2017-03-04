@@ -1,16 +1,47 @@
-def display_menu_get_choice():
+def display_menu_twitter():
     #Displaying the menu choice
     print('''
-        1. Search Twitter
+              ***TWITTER MENU***
+
+        1. Search Tweets on Twitter
         2. Update a status on Twitter
         3. Search users on Twitter
         4. Delete a status on Twitter
         5. Update a status on Twitter
+        6. Search Reddit for a topic
+        e. Exit to main menu
+    ''')
+
+    user_choice = input('Enter your selection: ')
+    return user_choice
+
+def display_menu_reddit():
+    #Displaying the menu choice
+    print('''
+              ***REDDIT MENU***
+
+        1. Search Subreddits on Reddit
+        e. Exit to main menu
+    ''')
+
+    user_choice = input('Enter your selection: ')
+    return user_choice
+
+def display_main_menu():
+    #Displaying the menu choice
+    print('''
+        ***MAIN MENU***
+
+        1. Twitter
+        2. Reddit
+        3. *OtherAPI* not used yet
+        4. Search all Sites
         q. Quit
     ''')
 
     user_choice = input('Enter your selection: ')
     return user_choice
+
 
 def get_user_search():
     #getting the user search

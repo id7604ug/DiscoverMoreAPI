@@ -1,14 +1,16 @@
+import sys
 from TwitterSearch import *
 import data_base_tables
 import user_interface
 import tweepy
+import praw
 
 
 class UserApiRequest(object):
     def __init__(self):
         self.consumer_key ='' # Please enter your consumer key here
         self.consumer_secret='' # Please enter your consumer secret here
-        self.access_token=''# Please enter your access token here
+        self.access_token='' # Please enter your access token here
         self.access_token_secret='' # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
@@ -82,7 +84,26 @@ class UserApiRequest(object):
          You can increase count variable to specified the amount of result to display"""
         name = input("Please enter a Twitter user name would like to search: ")
         twitter_user_name = self.api.search_users(q=name, count=10)
-        print(twitter_user_name)
         for user in twitter_user_name:
             print('User name: {}, User screen name: {}, User location: {}, User description: {}'\
                   .format(user.name, user.screen_name, user.location, user.description))
+
+
+class RedditAPIRequest(object):
+
+    def search_reddit(self):
+        try:
+            r = praw.Reddit(client_id='',
+                client_secret='',
+                password='',
+                user_agent='',
+                username='')
+            user_input = user_interface.get_user_search()
+            user_input = user_input.replace(' ', '')
+            for submission in r.subreddit(user_input).top(limit=5):
+                print(submission.title)
+                print(submission.url)
+
+        except:
+                e = sys.exc_info()[0]
+                print('No results found')
