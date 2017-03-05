@@ -41,6 +41,18 @@ def handle_choice_reddit(user_choice):
     else:
        print('Please enter a valid selection')
 
+def handle_choice_youtube(user_choice):
+    user_youtube = api_requests.YoutubeAPIRequest()
+    # function to handle the choice selected
+    if user_choice == '1':
+        user_youtube.search_youtube()
+
+    elif user_choice == 'e':
+        main()
+
+    else:
+       print('Please enter a valid selection')
+
 def handle_choice_main(user_choice):
     # function to handle the choice selected
     if user_choice == '1':
@@ -50,7 +62,7 @@ def handle_choice_main(user_choice):
         open_reddit()
 
     elif user_choice == '3':
-        pass
+        open_youtube()
 
     elif user_choice == '4':
         pass
@@ -78,6 +90,15 @@ def open_reddit():
     while choice != quit_reddit:
         choice = user_interface.display_menu_reddit()
         handle_choice_reddit(choice)
+
+def open_youtube():
+
+    quit_youtube = 'e'
+    choice = None
+
+    while choice != quit_youtube:
+        choice = user_interface.display_menu_youtube()
+        handle_choice_youtube(choice)
 
 def main():
 

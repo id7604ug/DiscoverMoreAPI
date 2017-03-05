@@ -4,6 +4,9 @@ import data_base_tables
 import user_interface
 import tweepy
 import praw
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from oauth2client.tools import argparser
 
 
 class UserApiRequest(object):
@@ -93,17 +96,68 @@ class RedditAPIRequest(object):
 
     def search_reddit(self):
         try:
-            r = praw.Reddit(client_id='',
-                client_secret='',
-                password='',
-                user_agent='',
-                username='')
-            user_input = user_interface.get_user_search()
-            user_input = user_input.replace(' ', '')
-            for submission in r.subreddit(user_input).top(limit=5):
+            r = praw.Reddit(client_id='', # enter your client ID
+                client_secret='',          # enter your client secret
+                password='',                # enter your account password
+                user_agent='',              # enter your user agent
+                username='')                # enter your account username
+            user_input = user_interface.get_user_search()       # getting the user search
+            user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
+            for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
                 print(submission.title)
                 print(submission.url)
 
         except:
                 e = sys.exc_info()[0]
                 print('No results found')
+
+
+class YoutubeAPIRequest(object):
+    def __init__(self):
+        self.DEVELOPER_KEY = ''   # Enter your API key here
+        self.YOUTUBE_API_SERVICE_NAME = 'youtube'
+        self.YOUTUBE_API_VERSION = 'v3' # if using a different version enter it here
+
+    def search_youtube(self):
+
+     try:
+
+      user_input = user_interface.get_user_search() # getting the user search
+      user_count = user_interface.get_user_youtube_count() # getting the user count for search results
+      argparser.add_argument("--q", help="Search term", default=user_input)  # adding arguments
+      argparser.add_argument("--max-results", help="Max results", default=user_count)
+      options = argparser.parse_args()
+
+      youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,  # building the the youtube object
+        developerKey=self.DEVELOPER_KEY)
+
+      search_response = youtube.search().list(  # getting the search parameters
+        q=options.q,
+        part='snippet,id',
+        type='video',
+        maxResults=options.max_results
+      ).execute()
+      video_names = []
+      video_descriptions = []
+      channels = []
+      urls = []
+
+      for search_result in search_response.get('items', []):
+        video_names.append('%s' % (search_result['snippet']['title'])) # adding the title
+        video_descriptions.append('%s' % (search_result["snippet"]["description"])) # adding the description
+        channels.append('%s' % (search_result["snippet"]["channelTitle"])) # adding the name of the channel
+        video_id = (search_result['id']["videoId"]) # getting the video ID
+        urls.append('%s' % ('https://www.youtube.com/watch?v=' + video_id)) # adding the video id to the rest of the URL
+
+      count = 0
+      while count != len(video_descriptions): # printing each element of the lists
+        print ("Video Name:\n*", video_names[count], "\n")
+        print("Video Description:\n*", video_descriptions[count], "\n")
+        print("Channel:\n*", channels[count], "\n")
+        print ("URL:\n*", urls[count], "\n")
+        count += 1
+
+        print('*** Hold Command and double click to activate URL link ***', '\n')
+
+     except HttpError as e:
+         print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)) # catching errors
