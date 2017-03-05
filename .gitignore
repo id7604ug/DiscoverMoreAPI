@@ -93,3 +93,6 @@ ENV/
 __pyc
 __pycache__
 pyc
+
+# Secrets files
+reddit_secrets.txt
