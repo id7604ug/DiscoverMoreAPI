@@ -11,10 +11,10 @@ from oauth2client.tools import argparser
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key ='49ASKlgSBuQVrd5RAFxxQphwl' # Please enter your consumer key here
-        self.consumer_secret='VghGgjs05B8zRoiGDRVt7KUL3vXLVJwpsOesCipqw7pX50A3pL' # Please enter your consumer secret here
-        self.access_token='836064650559111169-ptdIYlhZf1JSCSOyuj1cQLPZbAurymu' # Please enter your access token here
-        self.access_token_secret='p6n6OiAn0LBkuLuUn8KMvrySYTFdpoOiuo0gcJqSTqEkq' # Please enter your access token secret here
+        self.consumer_key ='' # Please enter your consumer key here
+        self.consumer_secret='' # Please enter your consumer secret here
+        self.access_token='' # Please enter your access token here
+        self.access_token_secret='' # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
@@ -104,7 +104,7 @@ class RedditAPIRequest(object):
         self.title = [] # setting the lists back to empty
         self.urls = []
         try:
-            r = praw.Reddit(client_id='uujFxeXJ5ISQxQ', # enter your client ID
+            r = praw.Reddit(client_id='', # enter your client ID
                 client_secret='Gwp0Y41SSfuDDtqBzSAGam8-nV0',          # enter your client secret
                 password='chips123',                # enter your account password
                 user_agent='test_pyhton_api by /u/jdbelisle45',              # enter your user agent
@@ -126,7 +126,7 @@ class RedditAPIRequest(object):
 
 class YoutubeAPIRequest(object):
     def __init__(self):
-        self.DEVELOPER_KEY = 'AIzaSyDEIN7gn075MI9MqGGIUtLLWI26youCyzE'   # Enter your API key here
+        self.DEVELOPER_KEY = ''   # Enter your API key here
         self.YOUTUBE_API_SERVICE_NAME = 'youtube'
         self.YOUTUBE_API_VERSION = 'v3' # if using a different version enter it here
         self.video_names = []
