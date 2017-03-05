@@ -3,15 +3,19 @@ from TwitterSearch import *
 import data_base_tables
 import user_interface
 import tweepy
+
 import praw
+from bs4 import BeautifulSoup
+import requests
+
 
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key ='' # Please enter your consumer key here
-        self.consumer_secret='' # Please enter your consumer secret here
-        self.access_token='' # Please enter your access token here
-        self.access_token_secret='' # Please enter your access token secret here
+        self.consumer_key ='5BWWX2DfMOJpWzw2WbQofKzeQ' # Please enter your consumer key here
+        self.consumer_secret='IJnVpVqxyQxKQZ2JzLBFJ7s3pSmoyFxts4VLipMxkIsAzHtYWC' # Please enter your consumer secret here
+        self.access_token='1508067367-1FzmtXFSJc0p8WpP0deZszljlzyLkryBAMPwqvQ' # Please enter your access token here
+        self.access_token_secret='3nywRI2ZcKKvxSG3hCcRPACMMFULbdGJ9hT0s96YgSo1J' # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
@@ -87,17 +91,55 @@ class UserApiRequest(object):
         for user in twitter_user_name:
             print('User name: {}, User screen name: {}, User location: {}, User description: {}'\
                   .format(user.name, user.screen_name, user.location, user.description))
+import json
+
+
+class CurrentStreamListener(tweepy.StreamListener):
+
+        def on_data(self, raw_data):
+            converted_data = json.loads(raw_data)
+            with open('data_stream_file.txt', 'w') as data_stream:
+                data_stream.write(raw_data)
+                # print(raw_data)
+            return True
+
+        def on_error(self, status_code):
+            print(status_code)
+
+
+        def read_file(self):
+            with open('data_stream_file.txt', 'r') as readData:
+                file = readData.readlines()
+                for tweet in file:
+                    print(tweet)
+
+class StreamMonitoring(object):
+    def __init__(self):
+        self.current_stream_monitor = CurrentStreamListener()
+        self.user_request = UserApiRequest()
+
+    def start_stream(self):
+        streaming_values = tweepy.Stream(auth=self.user_request.auth, listener=self.current_stream_monitor)
+        streaming_values.filter(track=['Soccer', 'Basketball', 'Baseball'])
+
+
 
 
 class RedditAPIRequest(object):
+    def __init__(self):
+        self.client_id=''
+        self.client_secret=''
+        self.password=''
+        self.user_agent=''
+        self.username=''
 
     def search_reddit(self):
         try:
-            r = praw.Reddit(client_id='',
-                client_secret='',
-                password='',
-                user_agent='',
-                username='')
+            r = praw.Reddit(self.client_id,
+                self.client_secret,
+                self.password,
+                self.user_agent,
+                self.username)
             user_input = user_interface.get_user_search()
             user_input = user_input.replace(' ', '')
             for submission in r.subreddit(user_input).top(limit=5):
@@ -107,3 +149,26 @@ class RedditAPIRequest(object):
         except:
                 e = sys.exc_info()[0]
                 print('No results found')
+
+    def display_reddit_trending_topic_now(self):
+        trends = requests.get('https://www.reddit.com/r/Trending/')
+        contents = BeautifulSoup(trends.content)
+        current_trends = contents.find_all("div", {"class": "entry unvoted"})
+        for child in current_trends:
+            tagp = child.find_all('p', {'class': 'title'})
+            for text in tagp:
+                href_link = text.find('a')
+                print(href_link.get('href'))
+                for atext in text:
+                    if atext.string is not None:
+                        print(atext.string)
+                    else:
+                        pass
+
+
+if __name__=='__main__':
+    current_value = StreamMonitoring()
+
+    current_value.start_stream()
+    current_read = CurrentStreamListener()
+    current_read.read_file()
