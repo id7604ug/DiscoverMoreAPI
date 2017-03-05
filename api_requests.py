@@ -105,10 +105,10 @@ class RedditAPIRequest(object):
         self.urls = []
         try:
             r = praw.Reddit(client_id='', # enter your client ID
-                client_secret='Gwp0Y41SSfuDDtqBzSAGam8-nV0',          # enter your client secret
-                password='chips123',                # enter your account password
-                user_agent='test_pyhton_api by /u/jdbelisle45',              # enter your user agent
-                username='jdbelisle45')                # enter your account username
+                client_secret='',          # enter your client secret
+                password='',                # enter your account password
+                user_agent='',              # enter your user agent
+                username='')                # enter your account username
             user_input = user_interface.get_user_search()       # getting the user search
             user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
             for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
