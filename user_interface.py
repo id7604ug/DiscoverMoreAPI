@@ -1,5 +1,5 @@
 def display_menu_twitter():
-    #Displaying the menu choice
+    #Displaying the Twitter menu choice
     print('''
               ***TWITTER MENU***
 
@@ -7,7 +7,6 @@ def display_menu_twitter():
         2. Update a status on Twitter
         3. Search users on Twitter
         4. Delete a status on Twitter
-        5. Update a status on Twitter
         e. Exit to main menu
     ''')
 
@@ -15,7 +14,7 @@ def display_menu_twitter():
     return user_choice
 
 def display_menu_reddit():
-    #Displaying the menu choice
+    #Displaying the Reddit menu choice
     print('''
               ***REDDIT MENU***
 
@@ -27,7 +26,7 @@ def display_menu_reddit():
     return user_choice
 
 def display_menu_youtube():
-    #Displaying the menu choice
+    #Displaying the youtube menu choice
     print('''
               ***YOUTUBE MENU***
 
@@ -40,7 +39,7 @@ def display_menu_youtube():
 
 
 def display_main_menu():
-    #Displaying the menu choice
+    #Displaying the main menu choice
     print('''
         ***MAIN MENU***
 
@@ -56,7 +55,7 @@ def display_main_menu():
 
 
 def get_user_search():
-    #getting the user search
+    #getting the user search input
     user_input = input("Enter a search: ")
     print('')
     return user_input

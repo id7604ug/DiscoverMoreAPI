@@ -1,26 +1,26 @@
 import user_interface
 import api_requests
-from datastore import call_get_tweets
+from datastore import call_get_tweets, call_get_reddit
 
 
 def handle_choice_twitter(user_choice):
     user_tweets = api_requests.UserApiRequest()
     # function to handle the choice selected
     if user_choice == '1':
-        # searching tweets
+        # function to search tweets
         call_get_tweets()
 
     elif user_choice == '2':
+        # function to change status update
         user_tweets.status_update()
 
     elif user_choice == '3':
+        # function to search twitter users
         user_tweets.search_twitter_user()
 
     elif user_choice == '4':
+        # function to delete status
         user_tweets.delete_status()
-
-    elif user_choice == '5':
-        user_tweets.status_update()
 
     elif user_choice == 'e':
         main()
@@ -33,7 +33,8 @@ def handle_choice_reddit(user_choice):
     user_reddit = api_requests.RedditAPIRequest()
     # function to handle the choice selected
     if user_choice == '1':
-        user_reddit.search_reddit()
+        # function to call the search Reddit
+        call_get_reddit()
 
     elif user_choice == 'e':
         main()
@@ -45,6 +46,7 @@ def handle_choice_youtube(user_choice):
     user_youtube = api_requests.YoutubeAPIRequest()
     # function to handle the choice selected
     if user_choice == '1':
+        # function to call the search for Youtube
         user_youtube.search_youtube()
 
     elif user_choice == 'e':
@@ -56,12 +58,15 @@ def handle_choice_youtube(user_choice):
 def handle_choice_main(user_choice):
     # function to handle the choice selected
     if user_choice == '1':
+        # opening the twitter menu
         open_twitter()
 
     elif user_choice == '2':
+        # opening the reddit menu
         open_reddit()
 
     elif user_choice == '3':
+        # opening the youtube menu
         open_youtube()
 
     elif user_choice == '4':
@@ -74,7 +79,7 @@ def handle_choice_main(user_choice):
        print('Please enter a valid selection')
 
 def open_twitter():
-
+    # a function to open the twtter menu
     quit_twitter = 'e'
     choice = None
 
@@ -83,7 +88,7 @@ def open_twitter():
         handle_choice_twitter(choice)
 
 def open_reddit():
-
+    # a function to open the Reddit menu
     quit_reddit = 'e'
     choice = None
 
@@ -92,7 +97,7 @@ def open_reddit():
         handle_choice_reddit(choice)
 
 def open_youtube():
-
+    # a function to open the Youtube menu
     quit_youtube = 'e'
     choice = None
 

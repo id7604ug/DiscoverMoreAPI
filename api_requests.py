@@ -23,6 +23,9 @@ class UserApiRequest(object):
         self.api = tweepy.API(self.auth)
 
     def get_tweets(self):
+        self.screen_name = [] # setting the lists back to empty
+        self.date_tweet = []
+        self.tweet_list = []
         try:
             user_search = user_interface.get_user_search() # getting the user search
             get_tweet_count = user_interface.get_user_tweet_count() # getting the amount of tweets
@@ -93,8 +96,13 @@ class UserApiRequest(object):
 
 
 class RedditAPIRequest(object):
+    def __init__(self):
+        self.title = []
+        self.urls = []
 
     def search_reddit(self):
+        self.title = [] # setting the lists back to empty
+        self.urls = []
         try:
             r = praw.Reddit(client_id='', # enter your client ID
                 client_secret='',          # enter your client secret
@@ -104,8 +112,12 @@ class RedditAPIRequest(object):
             user_input = user_interface.get_user_search()       # getting the user search
             user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
             for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
-                print(submission.title)
-                print(submission.url)
+                print("Title:\n*",submission.title, '\n')
+                self.title.append(submission.title)
+                print("URL:\n*",submission.url, '\n')
+                self.urls.append(submission.url)
+
+            print('*** Hold Command and double click to activate URL link ***', '\n')
 
         except:
                 e = sys.exc_info()[0]
@@ -117,6 +129,10 @@ class YoutubeAPIRequest(object):
         self.DEVELOPER_KEY = ''   # Enter your API key here
         self.YOUTUBE_API_SERVICE_NAME = 'youtube'
         self.YOUTUBE_API_VERSION = 'v3' # if using a different version enter it here
+        self.video_names = []
+        self.video_descriptions = []
+        self.channels = []
+        self.urls = []
 
     def search_youtube(self):
 
@@ -137,24 +153,20 @@ class YoutubeAPIRequest(object):
         type='video',
         maxResults=options.max_results
       ).execute()
-      video_names = []
-      video_descriptions = []
-      channels = []
-      urls = []
 
       for search_result in search_response.get('items', []):
-        video_names.append('%s' % (search_result['snippet']['title'])) # adding the title
-        video_descriptions.append('%s' % (search_result["snippet"]["description"])) # adding the description
-        channels.append('%s' % (search_result["snippet"]["channelTitle"])) # adding the name of the channel
+        self.video_names.append('%s' % (search_result['snippet']['title'])) # adding the title
+        self.video_descriptions.append('%s' % (search_result["snippet"]["description"])) # adding the description
+        self.channels.append('%s' % (search_result["snippet"]["channelTitle"])) # adding the name of the channel
         video_id = (search_result['id']["videoId"]) # getting the video ID
-        urls.append('%s' % ('https://www.youtube.com/watch?v=' + video_id)) # adding the video id to the rest of the URL
+        self.urls.append('%s' % ('https://www.youtube.com/watch?v=' + video_id)) # adding the video id to the rest of the URL
 
       count = 0
-      while count != len(video_descriptions): # printing each element of the lists
-        print ("Video Name:\n*", video_names[count], "\n")
-        print("Video Description:\n*", video_descriptions[count], "\n")
-        print("Channel:\n*", channels[count], "\n")
-        print ("URL:\n*", urls[count], "\n")
+      while count != len(self.video_descriptions): # printing each element of the lists
+        print ("Video Name:\n*", self.video_names[count], "\n")
+        print("Video Description:\n*", self.video_descriptions[count], "\n")
+        print("Channel:\n*", self.channels[count], "\n")
+        print ("URL:\n*", self.urls[count], "\n")
         count += 1
 
         print('*** Hold Command and double click to activate URL link ***', '\n')
