@@ -91,37 +91,6 @@ class UserApiRequest(object):
         for user in twitter_user_name:
             print('User name: {}, User screen name: {}, User location: {}, User description: {}'\
                   .format(user.name, user.screen_name, user.location, user.description))
-import json
-
-
-class CurrentStreamListener(tweepy.StreamListener):
-
-        def on_data(self, raw_data):
-            converted_data = json.loads(raw_data)
-            with open('data_stream_file.txt', 'w') as data_stream:
-                data_stream.write(raw_data)
-                # print(raw_data)
-            return True
-
-        def on_error(self, status_code):
-            print(status_code)
-
-
-        def read_file(self):
-            with open('data_stream_file.txt', 'r') as readData:
-                file = readData.readlines()
-                for tweet in file:
-                    print(tweet)
-
-class StreamMonitoring(object):
-    def __init__(self):
-        self.current_stream_monitor = CurrentStreamListener()
-        self.user_request = UserApiRequest()
-
-    def start_stream(self):
-        streaming_values = tweepy.Stream(auth=self.user_request.auth, listener=self.current_stream_monitor)
-        streaming_values.filter(track=['Soccer', 'Basketball', 'Baseball'])
-
 
 
 
@@ -166,9 +135,3 @@ class RedditAPIRequest(object):
                         pass
 
 
-if __name__=='__main__':
-    current_value = StreamMonitoring()
-
-    current_value.start_stream()
-    current_read = CurrentStreamListener()
-    current_read.read_file()
