@@ -95,4 +95,5 @@ __pycache__
 pyc
 
 # Secrets files
-reddit_secrets.txt
+reddit_secret.txt
+youtube_secret.txt

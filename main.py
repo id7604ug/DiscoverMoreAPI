@@ -55,20 +55,24 @@ def handle_choice_youtube(user_choice):
     else:
        print('Please enter a valid selection')
 
+# function to handle the choice selected
 def handle_choice_main(user_choice):
-    # function to handle the choice selected
+    # Twitter
     if user_choice == '1':
         # opening the twitter menu
         open_twitter()
 
+    # Reddit
     elif user_choice == '2':
         # opening the reddit menu
         open_reddit()
 
+    # YouTube
     elif user_choice == '3':
         # opening the youtube menu
         open_youtube()
 
+    # Search all
     elif user_choice == '4':
         pass
 

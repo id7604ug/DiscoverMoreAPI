@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.tools import argparser
 
-
+# Twitter
 class UserApiRequest(object):
     def __init__(self):
         self.consumer_key ='' # Please enter your consumer key here
@@ -104,11 +104,12 @@ class RedditAPIRequest(object):
         self.title = [] # setting the lists back to empty
         self.urls = []
         try:
-            r = praw.Reddit(client_id='', # enter your client ID
-                client_secret='',          # enter your client secret
-                password='',                # enter your account password
-                user_agent='',              # enter your user agent
-                username='')                # enter your account username
+            reddit_secret = open('reddit_secret.txt', 'r').read().split('\n')
+            r = praw.Reddit(client_id=str(reddit_secret[0]), # enter your client ID
+                client_secret=str(reddit_secret[1]),          # enter your client secret
+                password=str(reddit_secret[2]),                # enter your account password
+                user_agent=str(reddit_secret[3]),              # enter your user agent
+                username=str(reddit_secret[4]))                # enter your account username
             user_input = user_interface.get_user_search()       # getting the user search
             user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
             for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
@@ -126,7 +127,7 @@ class RedditAPIRequest(object):
 
 class YoutubeAPIRequest(object):
     def __init__(self):
-        self.DEVELOPER_KEY = ''   # Enter your API key here
+        self.DEVELOPER_KEY = str(open('youtube_secret.txt', 'r').read())   # Enter your API key here
         self.YOUTUBE_API_SERVICE_NAME = 'youtube'
         self.YOUTUBE_API_VERSION = 'v3' # if using a different version enter it here
         self.video_names = []
