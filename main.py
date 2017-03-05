@@ -1,6 +1,6 @@
 import user_interface
 import api_requests
-from datastore import call_get_tweets, call_get_reddit
+from datastore import call_get_tweets, call_get_reddit, call_get_youtube
 
 
 def handle_choice_twitter(user_choice):
@@ -47,7 +47,7 @@ def handle_choice_youtube(user_choice):
     # function to handle the choice selected
     if user_choice == '1':
         # function to call the search for Youtube
-        user_youtube.search_youtube()
+        call_get_youtube()
 
     elif user_choice == 'e':
         main()

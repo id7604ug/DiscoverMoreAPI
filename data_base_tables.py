@@ -46,3 +46,24 @@ class Reddit(Base):
 
     def __repr__(self):
         return 'reddit: id = {} subreddit_title = {} url_subreddit = {} '.format(self.id, self.subreddit_title, self.url_subreddit)
+
+class Youtube(Base):
+
+   # creating a table
+    __tablename__ = 'youtube'
+
+    # creating the columns
+    id = Column(Integer, primary_key=True)
+    video_names = Column(String)
+    channels = Column(String)
+    url_youtube = Column(String)
+
+
+    def __init__(self, video_names, channels, url_youtube):
+        self.video_names = video_names
+        self.channels = channels
+        self.url_youtube = url_youtube
+
+
+    def __repr__(self):
+        return 'youtube: id = {} video_names = {} channels = {} url_youtube = {} '.format(self.id, self.video_names, self.channels, self.url_youtube)

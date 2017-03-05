@@ -11,10 +11,10 @@ from oauth2client.tools import argparser
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key ='' # Please enter your consumer key here
-        self.consumer_secret='' # Please enter your consumer secret here
-        self.access_token='' # Please enter your access token here
-        self.access_token_secret='' # Please enter your access token secret here
+        self.consumer_key ='49ASKlgSBuQVrd5RAFxxQphwl' # Please enter your consumer key here
+        self.consumer_secret='VghGgjs05B8zRoiGDRVt7KUL3vXLVJwpsOesCipqw7pX50A3pL' # Please enter your consumer secret here
+        self.access_token='836064650559111169-ptdIYlhZf1JSCSOyuj1cQLPZbAurymu' # Please enter your access token here
+        self.access_token_secret='p6n6OiAn0LBkuLuUn8KMvrySYTFdpoOiuo0gcJqSTqEkq' # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
@@ -104,11 +104,11 @@ class RedditAPIRequest(object):
         self.title = [] # setting the lists back to empty
         self.urls = []
         try:
-            r = praw.Reddit(client_id='', # enter your client ID
-                client_secret='',          # enter your client secret
-                password='',                # enter your account password
-                user_agent='',              # enter your user agent
-                username='')                # enter your account username
+            r = praw.Reddit(client_id='uujFxeXJ5ISQxQ', # enter your client ID
+                client_secret='Gwp0Y41SSfuDDtqBzSAGam8-nV0',          # enter your client secret
+                password='chips123',                # enter your account password
+                user_agent='test_pyhton_api by /u/jdbelisle45',              # enter your user agent
+                username='jdbelisle45')                # enter your account username
             user_input = user_interface.get_user_search()       # getting the user search
             user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
             for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
@@ -126,7 +126,7 @@ class RedditAPIRequest(object):
 
 class YoutubeAPIRequest(object):
     def __init__(self):
-        self.DEVELOPER_KEY = ''   # Enter your API key here
+        self.DEVELOPER_KEY = 'AIzaSyDEIN7gn075MI9MqGGIUtLLWI26youCyzE'   # Enter your API key here
         self.YOUTUBE_API_SERVICE_NAME = 'youtube'
         self.YOUTUBE_API_VERSION = 'v3' # if using a different version enter it here
         self.video_names = []
@@ -135,41 +135,45 @@ class YoutubeAPIRequest(object):
         self.urls = []
 
     def search_youtube(self):
+         self.video_names = [] # setting the lists back to empty
+         self.video_descriptions = []
+         self.channels = []
+         self.urls = []
 
-     try:
+         try:
 
-      user_input = user_interface.get_user_search() # getting the user search
-      user_count = user_interface.get_user_youtube_count() # getting the user count for search results
-      argparser.add_argument("--q", help="Search term", default=user_input)  # adding arguments
-      argparser.add_argument("--max-results", help="Max results", default=user_count)
-      options = argparser.parse_args()
+          user_input = user_interface.get_user_search() # getting the user search
+          user_count = user_interface.get_user_youtube_count() # getting the user count for search results
+          argparser.add_argument("--q", help="Search term", default=user_input)  # adding arguments
+          argparser.add_argument("--max-results", help="Max results", default=user_count)
+          options = argparser.parse_args()
 
-      youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,  # building the the youtube object
-        developerKey=self.DEVELOPER_KEY)
+          youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,  # building the the youtube object
+            developerKey=self.DEVELOPER_KEY)
 
-      search_response = youtube.search().list(  # getting the search parameters
-        q=options.q,
-        part='snippet,id',
-        type='video',
-        maxResults=options.max_results
-      ).execute()
+          search_response = youtube.search().list(  # getting the search parameters
+            q=options.q,
+            part='snippet,id',
+            type='video',
+            maxResults=options.max_results
+          ).execute()
 
-      for search_result in search_response.get('items', []):
-        self.video_names.append('%s' % (search_result['snippet']['title'])) # adding the title
-        self.video_descriptions.append('%s' % (search_result["snippet"]["description"])) # adding the description
-        self.channels.append('%s' % (search_result["snippet"]["channelTitle"])) # adding the name of the channel
-        video_id = (search_result['id']["videoId"]) # getting the video ID
-        self.urls.append('%s' % ('https://www.youtube.com/watch?v=' + video_id)) # adding the video id to the rest of the URL
+          for search_result in search_response.get('items', []):
+            self.video_names.append('%s' % (search_result['snippet']['title'])) # adding the title
+            self.video_descriptions.append('%s' % (search_result["snippet"]["description"])) # adding the description
+            self.channels.append('%s' % (search_result["snippet"]["channelTitle"])) # adding the name of the channel
+            video_id = (search_result['id']["videoId"]) # getting the video ID
+            self.urls.append('%s' % ('https://www.youtube.com/watch?v=' + video_id)) # adding the video id to the rest of the URL
 
-      count = 0
-      while count != len(self.video_descriptions): # printing each element of the lists
-        print ("Video Name:\n*", self.video_names[count], "\n")
-        print("Video Description:\n*", self.video_descriptions[count], "\n")
-        print("Channel:\n*", self.channels[count], "\n")
-        print ("URL:\n*", self.urls[count], "\n")
-        count += 1
+          count = 0
+          while count != len(self.video_descriptions): # printing each element of the lists
+            print ("Video Name:\n*", self.video_names[count], "\n")
+            print("Video Description:\n*", self.video_descriptions[count], "\n")
+            print("Channel:\n*", self.channels[count], "\n")
+            print ("URL:\n*", self.urls[count], "\n")
+            count += 1
 
-        print('*** Hold Command and double click to activate URL link ***', '\n')
+            print('*** Hold Command and double click to activate URL link ***', '\n')
 
-     except HttpError as e:
-         print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)) # catching errors
+         except HttpError as e:
+             print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)) # catching errors

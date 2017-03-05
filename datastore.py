@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import api_requests
-from data_base_tables import Base, Twitter, Reddit
+from data_base_tables import Base, Twitter, Reddit, Youtube
 
 engine = create_engine('sqlite:///discover_more.db', echo=False)
 
@@ -16,6 +16,7 @@ session = Session()
 # getting objects from the api_requests
 user_tweets = api_requests.UserApiRequest()
 user_reddit = api_requests.RedditAPIRequest()
+user_youtube = api_requests.YoutubeAPIRequest()
 
 def call_get_tweets():
     # getting the tweets and saving them
@@ -26,6 +27,11 @@ def call_get_reddit():
     # getting the results from Reddit and saving them
     user_reddit.search_reddit()
     save_reddit()
+
+def call_get_youtube():
+    # getting the results from youtube and saving them
+    user_youtube.search_youtube()
+    save_youtube()
 
 def save_twitter():
     # saving each tweet, user name, and date of tweet to the database
@@ -57,6 +63,26 @@ def save_reddit():
         count += 1
 
         record1 = Reddit(subreddit_title=SUBREDDIT_TITLE, url_subreddit=SUBREDDIT_URL)
+
+        save_session = Session()
+
+        save_session.add(record1)
+
+        save_session.commit()
+
+        save_session.close()
+
+def save_youtube():
+    # saving each video name, channel, and url to the database
+    counts = len(user_youtube.video_names)
+    count = 0
+    while count != counts:
+        VIDEO_NAME = user_youtube.video_names[count]
+        CHANNEL = user_youtube.channels[count]
+        YOUTUBE_URL = user_youtube.urls[count]
+        count += 1
+
+        record1 = Youtube(video_names=VIDEO_NAME, channels=CHANNEL, url_youtube=YOUTUBE_URL)
 
         save_session = Session()
 
