@@ -1,6 +1,6 @@
 import user_interface
 import api_requests
-from datastore import call_get_tweets, call_get_reddit, call_get_youtube
+from datastore import call_get_tweets, call_get_reddit, call_get_youtube, call_search_all_twitter, call_search_all_reddit, call_search_all_youtube
 
 
 def handle_choice_twitter(user_choice):
@@ -55,6 +55,16 @@ def handle_choice_youtube(user_choice):
     else:
        print('Please enter a valid selection')
 
+# Funciton to handle searching all APIs also uses concurrency -----------------------------------
+def search_all(search_string):
+    if search_string != '':
+        call_search_all_twitter(search_string)
+        call_search_all_reddit(search_string)
+        call_search_all_youtube(search_string)
+    else:
+        print('Please enter a search term')
+
+
 # function to handle the choice selected
 def handle_choice_main(user_choice):
     # Twitter
@@ -72,9 +82,10 @@ def handle_choice_main(user_choice):
         # opening the youtube menu
         open_youtube()
 
-    # Search all
+    # Search all ----------------------------------------------------------
     elif user_choice == '4':
-        pass
+        search_all(user_interface.get_search_all())
+
 
     elif user_choice == 'q':
         quit()

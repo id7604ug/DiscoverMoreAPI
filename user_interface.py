@@ -46,7 +46,7 @@ def display_main_menu():
         1. Twitter
         2. Reddit
         3. Youtube
-        4. Search all Sites*NOT YET WORKING
+        4. Search all Sites
         q. Quit
     ''')
 
@@ -90,4 +90,9 @@ def get_user_youtube_count():
         except ValueError:
             print('please enter a int')
     print('')
+    return user_input
+
+# Function to get search for all APIs
+def get_search_all():
+    user_input = input("What would you like to search on all websites: ")
     return user_input

@@ -67,6 +67,33 @@ class UserApiRequest(object):
         except TwitterSearchException as e:  # catch any errors
             print(e)
 
+    def search_using_string(self, search_string):
+        try:
+            tso = TwitterSearchOrder()
+            tso.set_keywords([search_string])
+            tso.set_language('en')
+            tso.set_include_entities(False)
+
+            ts = TwitterSearch(
+                self.consumer_key,
+                self.consumer_secret,
+                self.access_token,
+                self.access_token_secret
+            )
+
+            counter = 0
+            for tweet in ts.search_tweets_iterable(tso):
+                self.screen_name.append(tweet['user']['screen_name'])
+                self.tweet_list.append(tweet['text'])
+                self.date_tweet.append(tweet['created_at'])
+                print('@%s tweeted: %s' % (tweet['user']['screen_name'], tweet['text']), '\n')
+                counter += 1
+                # will stop displaying tweets per user request
+                if counter == 2:
+                    break
+        except TwitterSearchException as e:
+            print(e)
+
     # Update a status on Twitter
     def status_update(self):
         """This method updates a user status on twitter using the text enter by the user"""
@@ -143,7 +170,30 @@ class RedditAPIRequest(object):
 
         except:
                 e = sys.exc_info()[0]
-                print('No results found')
+                print('No reddit results found')
+
+    # Method for searching reddit using passed string
+    def search_using_string(self, search_string):
+        self.title = [] # setting the lists back to empty
+        self.urls = []
+        try:
+            reddit_secret = open('reddit_secret.txt', 'r').read().split('\n')
+            # print('line ~125')
+            r = praw.Reddit(client_id=str(reddit_secret[0]), # enter your client ID
+                client_secret=str(reddit_secret[1]),          # enter your client secret
+                password=str(reddit_secret[2]),                # enter your account password
+                user_agent=str(reddit_secret[3]),              # enter your user agent
+                username=str(reddit_secret[4]))                # enter your account username
+
+            search_string = search_string.replace(' ', '')
+            for submission in r.subreddit(search_string).top(limit=1):
+                print("Title:\n*",submission.title, '\n')
+                self.title.append(submission.title)
+                print("URL:\n*",submission.url, '\n')
+                self.urls.append(submission.url)
+        except:
+                e = sys.exc_info()[0]
+                print('No reddit results found')
 
 
     def display_reddit_trending_topic_now(self):
@@ -216,3 +266,44 @@ class YoutubeAPIRequest(object):
 
          except HttpError as e:
              print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)) # catching errors
+
+    def search_using_string(self, search_string):
+        self.video_names = [] # setting the lists back to empty
+        self.video_descriptions = []
+        self.channels = []
+        self.urls = []
+
+        try:
+         argparser.add_argument("--q", help="Search term", default=search_string)  # adding arguments
+         argparser.add_argument("--max-results", help="Max results", default=1)
+         options = argparser.parse_args()
+
+         youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,  # building the youtube object
+           developerKey=self.DEVELOPER_KEY)
+
+         search_response = youtube.search().list(  # getting the search parameters
+           q=options.q,
+           part='snippet,id',
+           type='video',
+           maxResults=options.max_results
+         ).execute()
+
+         for search_result in search_response.get('items', []):
+           self.video_names.append('%s' % (search_result['snippet']['title'])) # adding the title
+           self.video_descriptions.append('%s' % (search_result["snippet"]["description"])) # adding the description
+           self.channels.append('%s' % (search_result["snippet"]["channelTitle"])) # adding the name of the channel
+           video_id = (search_result['id']["videoId"]) # getting the video ID
+           self.urls.append('%s' % ('https://www.youtube.com/watch?v=' + video_id)) # adding the video id to the rest of the URL
+
+         count = 0
+         while count != len(self.video_descriptions): # printing each element of the lists
+           print ("Video Name:\n*", self.video_names[count], "\n")
+           print("Video Description:\n*", self.video_descriptions[count], "\n")
+           print("Channel:\n*", self.channels[count], "\n")
+           print ("URL:\n*", self.urls[count], "\n")
+           count += 1
+
+           print('*** Hold Command and double click to activate URL link ***', '\n')
+
+        except HttpError as e:
+            print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)) # catching errors
