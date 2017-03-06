@@ -25,10 +25,9 @@ def call_get_tweets():
 
 # Function for searching all APIs (twitter)
 def call_search_all_twitter(search_string):
-    print('Tweets:')
     user_tweets.search_using_string(search_string)
     save_twitter()
-    print('-------')
+    return 'done'
 
 def call_get_reddit():
     # getting the results from Reddit and saving them
@@ -37,10 +36,9 @@ def call_get_reddit():
 
 # Function for searching all APIs (reddit)
 def call_search_all_reddit(search_string):
-    print('Reddit:')
     user_reddit.search_using_string(search_string)
     save_reddit()
-    print('-------')
+    return 'done'
 
 def call_get_youtube():
     # getting the results from youtube and saving them
@@ -49,10 +47,9 @@ def call_get_youtube():
 
 # Function for searching all APIs (youtube)
 def call_search_all_youtube(search_string):
-    print('YouTube:')
     user_youtube.search_using_string(search_string)
     save_youtube()
-    print('--------')
+    return 'done'
 
 def save_twitter():
     # saving each tweet, user name, and date of tweet to the database
@@ -122,18 +119,3 @@ def save_trending_reddit_news():
         save_session.add(trends)
         save_session.commit()
         save_session.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

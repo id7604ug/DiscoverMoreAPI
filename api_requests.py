@@ -70,6 +70,7 @@ class UserApiRequest(object):
 
     def search_using_string(self, search_string):
         try:
+            result_string = ''
             tso = TwitterSearchOrder()
             tso.set_keywords([search_string])
             tso.set_language('en')
@@ -92,6 +93,7 @@ class UserApiRequest(object):
                 # will stop displaying tweets per user request
                 if counter == 2:
                     break
+            return 'done'
         except TwitterSearchException as e:
             print(e)
 

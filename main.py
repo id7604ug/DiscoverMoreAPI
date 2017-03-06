@@ -1,5 +1,7 @@
 import user_interface
 import api_requests
+from concurrent.futures import ProcessPoolExecutor
+from time import sleep
 
 from datastore import call_get_tweets, call_get_reddit, call_get_youtube, call_search_all_twitter, call_search_all_reddit, call_search_all_youtube, save_trending_reddit_news
 
@@ -15,8 +17,6 @@ def handle_choice_twitter(user_choice):
         # function to change status update
         user_tweets.status_update()
 
-
-
     elif user_choice == '3':
         # function to search twitter users
         user_tweets.search_twitter_user()
@@ -27,7 +27,6 @@ def handle_choice_twitter(user_choice):
 
     elif user_choice == 'e':
         main()
-
 
     else:
        print('Please enter a valid selection')
@@ -43,7 +42,6 @@ def handle_choice_reddit(user_choice):
         user_reddit.display_reddit_trending_news()
         save_trending_reddit_news()
 
-
     elif user_choice == 'e':
         main()
 
@@ -57,20 +55,25 @@ def handle_choice_youtube(user_choice):
         # function to call the search for Youtube
         call_get_youtube()
 
-
-
     elif user_choice == 'e':
         main()
 
     else:
        print('Please enter a valid selection')
 
-# Funciton to handle searching all APIs also uses concurrency -----------------------------------
+# Funciton to handle searching all APIs also uses concurrency
 def search_all(search_string):
+
     if search_string != '':
-        call_search_all_twitter(search_string)
-        call_search_all_reddit(search_string)
-        call_search_all_youtube(search_string)
+        executor = ProcessPoolExecutor()
+        future_twitter = executor.submit(call_search_all_twitter, search_string)
+        future_reddit = executor.submit(call_search_all_reddit, search_string)
+        future_youtube = executor.submit(call_search_all_youtube, search_string)
+        while future_twitter.result() != 'done' and future_reddit.result() != 'done' and future_youtube.result() != 'done':
+            sleep(1)
+        # executor.submit(call_search_all_twitter(search_string))
+        # executor.submit(call_search_all_reddit(search_string))
+        # executor.submit(call_search_all_youtube(search_string))
     else:
         print('Please enter a search term')
 
@@ -92,7 +95,7 @@ def handle_choice_main(user_choice):
         # opening the youtube menu
         open_youtube()
 
-    # Search all ----------------------------------------------------------
+    # Search all
     elif user_choice == '4':
         search_all(user_interface.get_search_all())
 
