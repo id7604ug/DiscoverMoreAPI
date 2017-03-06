@@ -7,9 +7,13 @@ Twitter:
 1) Create file called twitter_secret.txt
 
 2) Put your information in the file one line at a time in this order -
+
     consumer key
+
     consumer secret
+
     access token
+
     access token secret
 
 Reddit:
@@ -19,9 +23,13 @@ Reddit:
 2) Put your API information in the file one line at a time in this order -
 
     client ID
+
     client secret
+
     account password
+
     user agent
+
     account username
 
 YouTube:
