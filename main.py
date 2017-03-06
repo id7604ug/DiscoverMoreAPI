@@ -3,7 +3,7 @@ import api_requests
 from concurrent.futures import ProcessPoolExecutor
 from time import sleep
 
-from datastore import call_get_tweets, call_get_reddit, call_get_youtube, call_search_all_twitter, call_search_all_reddit, call_search_all_youtube, save_trending_reddit_news
+from datastore import *
 
 
 def handle_choice_twitter(user_choice):
@@ -99,6 +99,8 @@ def handle_choice_main(user_choice):
     elif user_choice == '4':
         search_all(user_interface.get_search_all())
 
+    elif user_choice == '5':
+        open_search_data()
 
     elif user_choice == 'q':
         quit()
@@ -132,6 +134,51 @@ def open_youtube():
     while choice != quit_youtube:
         choice = user_interface.display_menu_youtube()
         handle_choice_youtube(choice)
+
+def open_search_data():
+    # a function to open the Reddit menu
+    quit_search = 'e'
+    choice = None
+
+    while choice != quit_search:
+        choice = user_interface.display_search_menu_all()
+        if choice == '1':
+            open_search_twitter()
+            break
+        elif choice == '2':
+            open_search_reddit()
+            break
+        elif choice == '3':
+            open_search_youtube()
+            break
+
+def open_search_twitter():
+    # a function to open the twitter menu
+    quit_search = 'e'
+    choice = None
+
+    while choice != quit_search:
+        choice = user_interface.display_search_menu_twitter()
+        view_all_saved_twitter(choice)
+
+def open_search_reddit():
+    # a function to open the Reddit menu
+    quit_search = 'e'
+    choice = None
+
+    while choice != quit_search:
+        choice = user_interface.display_search_menu_reddit()
+        view_all_saved_reddit(choice)
+
+def open_search_youtube():
+    # a function to open the youtube menu
+    quit_search = 'e'
+    choice = None
+
+    while choice != quit_search:
+        choice = user_interface.display_search_menu_youtube()
+        view_all_saved_youtube(choice)
+
 
 def main():
 

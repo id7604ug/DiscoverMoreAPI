@@ -119,3 +119,73 @@ def save_trending_reddit_news():
         save_session.add(trends)
         save_session.commit()
         save_session.close()
+
+def view_all_saved_twitter(user_choice):
+    # viewing all the records
+    search_session_twitter = Session()
+    try:
+         twitter = search_session_twitter.query(Twitter).all()
+         row_count = search_session_twitter.query(Twitter).filter(Twitter.id > 0).count()
+         count = 0
+         while count != row_count:
+             if user_choice == '1':
+                 print('*', twitter[count].user_name)
+                 count += 1
+             elif user_choice == '2':
+                 print('*', twitter[count].tweet_text)
+                 count += 1
+             else:
+                break
+
+    except:
+        print('There is no data saved yet')
+
+
+def view_all_saved_reddit(user_choice):
+    # viewing all the records
+    search_session_reddit = Session()
+    try:
+         reddit = search_session_reddit.query(Reddit).all()
+         row_count = search_session_reddit.query(Reddit).filter(Reddit.id > 0).count()
+         count = 0
+         while count != row_count:
+             if user_choice == '1':
+                 print('*', reddit[count].subreddit_title)
+                 count += 1
+             elif user_choice == '2':
+                 print('*', reddit[count].url_subreddit)
+                 count += 1
+
+             elif user_choice == '3':
+                 print('*', reddit[count].reddit_trending_news)
+                 count += 1
+             else:
+                 break
+
+    except:
+        print('There is no data saved yet')
+
+
+def view_all_saved_youtube(user_choice):
+    # viewing all the records
+    search_session_youtube = Session()
+    try:
+         youtube = search_session_youtube.query(Youtube).all()
+         row_count = search_session_youtube.query(Youtube).filter(Youtube.id > 0).count()
+         count = 0
+         while count != row_count:
+             if user_choice == '1':
+                 print('*', youtube[count].video_names)
+                 count += 1
+             elif user_choice == '2':
+                 print('*', youtube[count].channels)
+                 count += 1
+
+             elif user_choice == '3':
+                 print('*', youtube[count].url_youtube)
+                 count += 1
+             else:
+                break
+
+    except:
+        print('There is no data saved yet')

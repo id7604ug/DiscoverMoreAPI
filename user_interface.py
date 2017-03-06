@@ -48,12 +48,67 @@ def display_main_menu():
         2. Reddit
         3. Youtube
         4. Search all Sites
+        5. Search saved data
         q. Quit
     ''')
 
     user_choice = input('Enter your selection: ')
     return user_choice
 
+def display_search_menu_twitter():
+    #Displaying the main menu choice
+    print('''
+        ***TWITTER SEARCH MENU***
+
+        1. Search User Name
+        2. Search Tweet
+        e. Exit
+    ''')
+
+    user_choice = input('Enter your selection: ')
+    return user_choice
+
+def display_search_menu_all():
+    #Displaying the main menu choice
+    print('''
+        ***SEARCH MENU***
+
+        1. Search Twitter Saved Data
+        2. Search Reddit Saved Data
+        3. Search Youtube Saved Data
+        e. Exit
+    ''')
+
+    user_choice = input('Enter your selection: ')
+    return user_choice
+
+def display_search_menu_reddit():
+    #Displaying the main menu choice
+    print('''
+        ***REDDIT SEARCH MENU***
+
+        1. Search Subreddit Title
+        2. Search URL Subreddit
+        3. Search Reddit Trending News
+        e. Exit
+    ''')
+
+    user_choice = input('Enter your selection: ')
+    return user_choice
+
+def display_search_menu_youtube():
+    #Displaying the main menu choice
+    print('''
+        ***YOUTUBE SEARCH MENU***
+
+        1. Search Video Name
+        2. Search Channels
+        3. Search URLS
+        e. Exit
+    ''')
+
+    user_choice = input('Enter your selection: ')
+    return user_choice
 
 def get_user_search():
     #getting the user search input
