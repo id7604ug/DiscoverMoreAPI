@@ -15,13 +15,22 @@ from googleapiclient.errors import HttpError
 from oauth2client.tools import argparser
 
 
+# Twitter
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key ='g1eqkuTjEhagm82E9RZUGJUgs' # Please enter your consumer key here
-        self.consumer_secret='ayET2YpxPArlpDJtACkYlLShUIrgmnSM1TXFDeBRHmwouWSmGr' # Please enter your consumer secret here
-        self.access_token='1508067367-1FzmtXFSJc0p8WpP0deZszljlzyLkryBAMPwqvQ' # Please enter your access token here
-        self.access_token_secret='3nywRI2ZcKKvxSG3hCcRPACMMFULbdGJ9hT0s96YgSo1J' # Please enter your access token secret here
+
+        self.consumer_key ='' # Please enter your consumer key here
+        self.consumer_secret='' # Please enter your consumer secret here
+        self.access_token='' # Please enter your access token here
+        self.access_token_secret='' # Please enter your access token secret here
+
+        twitter_secret = open('twitter_secret.txt', 'r').read().split('\n')
+        self.consumer_key = twitter_secret[0] # Please enter your consumer key here
+        self.consumer_secret = twitter_secret[1] # Please enter your consumer secret here
+        self.access_token = twitter_secret[2] # Please enter your access token here
+        self.access_token_secret = twitter_secret[3] # Please enter your access token secret here
+
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
@@ -133,23 +142,14 @@ class RedditAPIRequest(object):
         self.title = [] # setting the lists back to empty
         self.urls = []
         try:
-
-            r = praw.Reddit(self.client_id,
-                self.client_secret,
-                self.password,
-                self.user_agent,
-                self.username)
-            user_input = user_interface.get_user_search()
-            user_input = user_input.replace(' ', '')
-            for submission in r.subreddit(user_input).top(limit=5):
-                print(submission.title)
-                print(submission.url)
-
-            r = praw.Reddit(client_id='', # enter your client ID
-                client_secret='',          # enter your client secret
-                password='',                # enter your account password
-                user_agent='',              # enter your user agent
-                username='')                # enter your account username
+            reddit_secret = open('reddit_secret.txt', 'r').read().split('\n')
+            # print('line ~125')
+            r = praw.Reddit(client_id=str(reddit_secret[0]), # enter your client ID
+                client_secret=str(reddit_secret[1]),          # enter your client secret
+                password=str(reddit_secret[2]),                # enter your account password
+                user_agent=str(reddit_secret[3]),              # enter your user agent
+                username=str(reddit_secret[4]))                # enter your account username
+            # print('line ~131')
             user_input = user_interface.get_user_search()       # getting the user search
             user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
             for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
@@ -157,7 +157,7 @@ class RedditAPIRequest(object):
                 self.title.append(submission.title)
                 print("URL:\n*",submission.url, '\n')
                 self.urls.append(submission.url)
-
+            # print('line ~139')
             print('*** Hold Command and double click to activate URL link ***', '\n')
 
 
@@ -181,7 +181,7 @@ class RedditAPIRequest(object):
 
 class YoutubeAPIRequest(object):
     def __init__(self):
-        self.DEVELOPER_KEY = ''   # Enter your API key here
+        self.DEVELOPER_KEY = str(open('youtube_secret.txt', 'r').read())   # Enter your API key here
         self.YOUTUBE_API_SERVICE_NAME = 'youtube'
         self.YOUTUBE_API_VERSION = 'v3' # if using a different version enter it here
         self.video_names = []
@@ -231,8 +231,6 @@ class YoutubeAPIRequest(object):
             print('*** Hold Command and double click to activate URL link ***', '\n')
 
          except HttpError as e:
-             print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)) # catching errors
+             print(e)
 
-# if __name__=='__main__':
-#     call = RedditAPIRequest()
-#     call.display_reddit_trending_news()
+
