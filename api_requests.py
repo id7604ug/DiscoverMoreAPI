@@ -206,11 +206,16 @@ class RedditAPIRequest(object):
     def display_reddit_trending_news(self):
         try:
             trends = requests.get('https://www.reddit.com/r/news/')
-            contents = BeautifulSoup(trends.content)
+            contents = BeautifulSoup(trends.content, 'html.parser')
             current_news = contents.find_all('div', {'class':'entry unvoted'})
+            count = 0
             for news in current_news:
                 print(news.find('a').string)
                 self.reddit_trending.append(news.find('a').string)
+                count += 1
+                # Stops this from posting 10+ trends
+                if count == 5:
+                    break
         except HttpError:
             print("Error connecting to reddit")
 
