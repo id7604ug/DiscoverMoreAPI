@@ -19,10 +19,11 @@ from oauth2client.tools import argparser
 
 class UserApiRequest(object):
     def __init__(self):
-        self.consumer_key ='' # Please enter your consumer key here
-        self.consumer_secret='' # Please enter your consumer secret here
-        self.access_token='' # Please enter your access token here
-        self.access_token_secret='' # Please enter your access token secret here
+        twitter_secret = open('twitter_secret.txt', 'r').read().split('\n')
+        self.consumer_key = twitter_secret[0] # Please enter your consumer key here
+        self.consumer_secret = twitter_secret[1] # Please enter your consumer secret here
+        self.access_token = twitter_secret[2] # Please enter your access token here
+        self.access_token_secret = twitter_secret[3] # Please enter your access token secret here
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
