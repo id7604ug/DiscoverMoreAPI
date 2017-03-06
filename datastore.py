@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import api_requests
-from data_base_tables import Base, Twitter, Reddit, Youtube
+from data_base_tables import Base, Twitter, Reddit, Youtube, TwitterUserActivity
 
 engine = create_engine('sqlite:///discover_more.db', echo=False)
 
@@ -91,3 +91,44 @@ def save_youtube():
         save_session.commit()
 
         save_session.close()
+
+
+def save_twitter_user_activity():
+    tweet_user = TwitterUserActivity(twitter_status=None, twitter_delete_status=None, twitter_find_user=None)
+    status = ''
+    tweet_status = user_tweets.tweeted_status
+    for user_status in tweet_status:
+        print(user_status)
+        tweet_user.twitter_status = user_status
+
+    tweet_deleted = user_tweets.tweet_deleted
+    tweet_user.twitter_delete_status=None
+    for user_delete_tweet in tweet_deleted:
+        tweet_user.twitter_delete_status = user_delete_tweet
+
+    tweet_user.twitter_find_user = None
+    tweet_user_info = user_tweets.twitter_user_info
+    for user_tweet_info in tweet_user_info:
+        tweet_user.twitter_find_user=user_tweet_info
+
+    save_session = Session()
+    save_session.add(tweet_user)
+    save_session.commit()
+    save_session.close()
+
+
+def display_user_tweets():
+    user_value = session.query(TwitterUserActivity)
+    for a in user_value:
+        print(a)
+
+
+
+
+
+
+
+
+
+
+

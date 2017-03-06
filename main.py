@@ -1,6 +1,6 @@
 import user_interface
 import api_requests
-from datastore import call_get_tweets, call_get_reddit, call_get_youtube
+from datastore import call_get_tweets, call_get_reddit, call_get_youtube, save_twitter_user_activity, display_user_tweets
 
 
 def handle_choice_twitter(user_choice):
@@ -13,6 +13,8 @@ def handle_choice_twitter(user_choice):
     elif user_choice == '2':
         # function to change status update
         user_tweets.status_update()
+        save_twitter_user_activity()
+        display_user_tweets()
 
     elif user_choice == '3':
         # function to search twitter users
@@ -36,6 +38,9 @@ def handle_choice_reddit(user_choice):
         # function to call the search Reddit
         call_get_reddit()
 
+    elif user_choice == '2':
+        user_reddit.display_reddit_trending_news()
+
     elif user_choice == 'e':
         main()
 
@@ -48,6 +53,8 @@ def handle_choice_youtube(user_choice):
     if user_choice == '1':
         # function to call the search for Youtube
         call_get_youtube()
+
+
 
     elif user_choice == 'e':
         main()
