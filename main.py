@@ -1,6 +1,6 @@
 import user_interface
 import api_requests
-from datastore import call_get_tweets, call_get_reddit, call_get_youtube, save_twitter_user_activity, display_user_tweets
+from datastore import call_get_tweets, call_get_reddit, call_get_youtube, save_twitter_user_activity
 
 
 def handle_choice_twitter(user_choice):
