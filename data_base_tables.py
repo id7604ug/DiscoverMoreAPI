@@ -87,19 +87,3 @@ class Reddit_Trending(Base):
         return 'Trending: id={} reddit_trending_news={} reddit_trending_link={}'.format(self.id, self.reddit_trending_news, self.reddit_trending_link)
 
 
-class TwitterUserActivity(Base):
-    __tablename__ = 'twitter_user'
-    id = Column(Integer, primary_key=True)
-    twitter_status = Column(String)
-    twitter_delete_status = Column(String)
-    twitter_find_user = Column(String)
-
-    def __init__(self, twitter_status, twitter_delete_status, twitter_find_user):
-        self.twitter_status = twitter_status
-        self.twitter_delete_status = twitter_delete_status
-        self.twitter_find_user = twitter_find_user
-
-    def __str__(self):
-        return "Twitter user activity: id = {} twitter_status={} twitter_delete_status={} twitter_find_user={}".format(self.id, self.twitter_status, self.twitter_delete_status, self.twitter_find_user)
-
-
