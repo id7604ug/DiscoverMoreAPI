@@ -25,13 +25,9 @@ class UserApiRequest(object):
         self.consumer_secret = twitter_secret[1] # Please enter your consumer secret here
         self.access_token = twitter_secret[2] # Please enter your access token here
         self.access_token_secret = twitter_secret[3] # Please enter your access token secret here
-
         self.screen_name = []
         self.date_tweet = []
         self.tweet_list = []
-        self.tweeted_status = []
-        self.tweet_deleted = []
-        self.twitter_user_info = []
         self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
         self.auth.set_access_token(self.access_token, self.access_token_secret)
         self.api = tweepy.API(self.auth)
@@ -112,12 +108,8 @@ class UserApiRequest(object):
         for user in twitter_user_name:
             user_info ='User name: {}, User screen name: {}, User location: {}, User description: {}'\
                   .format(user.name, user.screen_name, user.location, user.description)
-            self.twitter_user_info.append(user_info)
+
             print(user_info)
-
-
-
-
 
 class RedditAPIRequest(object):
     def __init__(self):

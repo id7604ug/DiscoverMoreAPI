@@ -1,6 +1,6 @@
 import user_interface
 import api_requests
-from datastore import call_get_tweets, call_get_reddit, call_get_youtube
+from datastore import call_get_tweets, call_get_reddit, call_get_youtube, save_trending_reddit_news
 
 def handle_choice_twitter(user_choice):
     user_tweets = api_requests.UserApiRequest()
@@ -12,6 +12,7 @@ def handle_choice_twitter(user_choice):
     elif user_choice == '2':
         # function to change status update
         user_tweets.status_update()
+
 
 
     elif user_choice == '3':
@@ -38,6 +39,8 @@ def handle_choice_reddit(user_choice):
 
     elif user_choice == '2':
         user_reddit.display_reddit_trending_news()
+        save_trending_reddit_news()
+
 
     elif user_choice == 'e':
         main()

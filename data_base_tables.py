@@ -73,17 +73,17 @@ class Youtube(Base):
         return 'youtube: id = {} video_names = {} channels = {} url_youtube = {} '.format(self.id, self.video_names, self.channels, self.url_youtube)
 
 
-class Reddit_Trending(Base):
+class RedditTrending(Base):
     __tablename__ = 'trending'
     id = Column(Integer, primary_key=True)
     reddit_trending_news = Column(String)
     reddit_treding_link = Column(String)
 
-    def __init__(self, reddit_trending_news, reddit_trending_link):
+    def __init__(self, reddit_trending_news):
         self.reddit_trending_news = reddit_trending_news
-        self.reddit_trending_link = reddit_trending_link
+
 
     def __str__(self):
-        return 'Trending: id={} reddit_trending_news={} reddit_trending_link={}'.format(self.id, self.reddit_trending_news, self.reddit_trending_link)
+        return 'Trending: id={} reddit_trending_news={} reddit_trending_link={}'.format(self.id, self.reddit_trending_news)
 
 
