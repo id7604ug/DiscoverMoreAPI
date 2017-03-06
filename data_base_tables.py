@@ -37,11 +37,15 @@ class Reddit(Base):
     id = Column(Integer, primary_key=True)
     subreddit_title = Column(String)
     url_subreddit = Column(String)
+    reddit_trending_news = Column(String)
 
 
     def __init__(self, subreddit_title, url_subreddit):
         self.subreddit_title = subreddit_title
         self.url_subreddit = url_subreddit
+
+
+
 
 
     def __repr__(self):
@@ -67,3 +71,17 @@ class Youtube(Base):
 
     def __repr__(self):
         return 'youtube: id = {} video_names = {} channels = {} url_youtube = {} '.format(self.id, self.video_names, self.channels, self.url_youtube)
+
+
+class RedditTrending(Base):
+    __tablename__ = 'trending'
+    id = Column(Integer, primary_key=True)
+    reddit_trending_news = Column(String)
+    reddit_treding_link = Column(String)
+
+    def __init__(self, reddit_trending_news):
+        self.reddit_trending_news = reddit_trending_news
+
+
+    def __str__(self):
+        return 'Trending: id={} reddit_trending_news={} reddit_trending_link={}'.format(self.id, self.reddit_trending_news)

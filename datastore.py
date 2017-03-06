@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import api_requests
-from data_base_tables import Base, Twitter, Reddit, Youtube
+from data_base_tables import Base, Twitter, Reddit, Youtube, RedditTrending
 
 engine = create_engine('sqlite:///discover_more.db', echo=False)
 
@@ -112,3 +112,28 @@ def save_youtube():
         save_session.commit()
 
         save_session.close()
+
+
+def save_trending_reddit_news():
+    trend_news = user_reddit.reddit_trending
+    for news in trend_news:
+        trends = RedditTrending(reddit_trending_news=news)
+        save_session = Session()
+        save_session.add(trends)
+        save_session.commit()
+        save_session.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

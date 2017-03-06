@@ -1,6 +1,6 @@
 import sys
 from TwitterSearch import *
-import data_base_tables
+# import data_base_tables
 import user_interface
 import tweepy
 
@@ -19,6 +19,7 @@ from oauth2client.tools import argparser
 
 class UserApiRequest(object):
     def __init__(self):
+
         twitter_secret = open('twitter_secret.txt', 'r').read().split('\n')
         self.consumer_key = twitter_secret[0] # Please enter your consumer key here
         self.consumer_secret = twitter_secret[1] # Please enter your consumer secret here
@@ -98,23 +99,28 @@ class UserApiRequest(object):
     def status_update(self):
         """This method updates a user status on twitter using the text enter by the user"""
         status_post = input("Please enter status: ")
-        self.api.update_status(status=status_post, lat=45.0123061, long=-93.2358652)
+        self.tweeted_status.append(status_post)
+        self.api.update_status(status=status_post)
         print('Status message: {} successfully updated to your twitter account'.format(status_post))
+
 
     # Delete a status on Twitter
     def delete_status(self):
         """This method deletes a user status on Twitter. Only the first 5 tweets are
          display. You can increase count parameter to display specified number of tweets"""
         user_time_line = self.api.user_timeline(count=5)
+
         print('Enter 0 to exit deleting statuses')
         for i in range(len(user_time_line)):
             print('Enter {} to delete tweet: {}'.format(i+1, user_time_line[i].text))
+
         while True:
             try:
                 delete_tweet = int(input("Enter your choice for the tweet you want deleted: "))
                 if delete_tweet == 0:
                     break
                 print(user_time_line[delete_tweet-1].text + 'successfully deleted')
+                self.tweet_deleted.append(user_time_line[delete_tweet-1].id)
                 self.api.destroy_status(user_time_line[delete_tweet-1].id)
             except ValueError:
                 print('Please enter a valid number!!! Input error')
@@ -127,10 +133,10 @@ class UserApiRequest(object):
         name = input("Please enter a Twitter user name would like to search: ")
         twitter_user_name = self.api.search_users(q=name, count=10)
         for user in twitter_user_name:
-            print('User name: {}, User screen name: {}, User location: {}, User description: {}'\
-                  .format(user.name, user.screen_name, user.location, user.description))
+            user_info ='User name: {}, User screen name: {}, User location: {}, User description: {}'\
+                  .format(user.name, user.screen_name, user.location, user.description)
 
-
+            print(user_info)
 
 class RedditAPIRequest(object):
     def __init__(self):
@@ -143,6 +149,7 @@ class RedditAPIRequest(object):
 
         self.title = []
         self.urls = []
+        self.reddit_trending = []
 
 
     def search_reddit(self):
@@ -196,20 +203,16 @@ class RedditAPIRequest(object):
                 print('No reddit results found')
 
 
-    def display_reddit_trending_topic_now(self):
-        trends = requests.get('https://www.reddit.com/r/Trending/')
-        contents = BeautifulSoup(trends.content)
-        current_trends = contents.find_all("div", {"class": "entry unvoted"})
-        for child in current_trends:
-            tagp = child.find_all('p', {'class': 'title'})
-            for text in tagp:
-                href_link = text.find('a')
-                print(href_link.get('href'))
-                for atext in text:
-                    if atext.string is not None:
-                        print(atext.string)
-                    else:
-                        pass
+    def display_reddit_trending_news(self):
+        try:
+            trends = requests.get('https://www.reddit.com/r/news/')
+            contents = BeautifulSoup(trends.content)
+            current_news = contents.find_all('div', {'class':'entry unvoted'})
+            for news in current_news:
+                print(news.find('a').string)
+                self.reddit_trending.append(news.find('a').string)
+        except HttpError:
+            print("Error connecting to reddit")
 
 
 

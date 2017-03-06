@@ -19,6 +19,7 @@ def display_menu_reddit():
               ***REDDIT MENU***
 
         1. Search Subreddits on Reddit
+        2. Display trending Reddit Topics
         e. Exit to main menu
     ''')
 
