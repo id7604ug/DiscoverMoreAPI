@@ -3,12 +3,20 @@ from TwitterSearch import *
 import data_base_tables
 import user_interface
 import tweepy
+
 import praw
+
+from bs4 import BeautifulSoup
+import requests
+
+
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.tools import argparser
 
+
 # Twitter
+
 class UserApiRequest(object):
     def __init__(self):
         self.consumer_key ='' # Please enter your consumer key here
@@ -95,10 +103,19 @@ class UserApiRequest(object):
                   .format(user.name, user.screen_name, user.location, user.description))
 
 
+
 class RedditAPIRequest(object):
     def __init__(self):
+
+        self.client_id=''
+        self.client_secret=''
+        self.password=''
+        self.user_agent=''
+        self.username=''
+
         self.title = []
         self.urls = []
+
 
     def search_reddit(self):
         self.title = [] # setting the lists back to empty
@@ -110,6 +127,12 @@ class RedditAPIRequest(object):
                 password=str(reddit_secret[2]),                # enter your account password
                 user_agent=str(reddit_secret[3]),              # enter your user agent
                 username=str(reddit_secret[4]))                # enter your account username
+            r = praw.Reddit(self.client_id,
+                self.client_secret,
+                self.password,
+                self.user_agent,
+                self.username)
+
             user_input = user_interface.get_user_search()       # getting the user search
             user_input = user_input.replace(' ', '')        # getting rid of any spaces in the search
             for submission in r.subreddit(user_input).top(limit=5): # printing 5 subreddits
@@ -120,9 +143,27 @@ class RedditAPIRequest(object):
 
             print('*** Hold Command and double click to activate URL link ***', '\n')
 
+
         except:
                 e = sys.exc_info()[0]
                 print('No results found')
+
+
+    def display_reddit_trending_topic_now(self):
+        trends = requests.get('https://www.reddit.com/r/Trending/')
+        contents = BeautifulSoup(trends.content)
+        current_trends = contents.find_all("div", {"class": "entry unvoted"})
+        for child in current_trends:
+            tagp = child.find_all('p', {'class': 'title'})
+            for text in tagp:
+                href_link = text.find('a')
+                print(href_link.get('href'))
+                for atext in text:
+                    if atext.string is not None:
+                        print(atext.string)
+                    else:
+                        pass
+
 
 
 class YoutubeAPIRequest(object):
